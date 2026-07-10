@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lone Star Aerial — Drone Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B1420;
+    --bg-panel: #101C2C;
+    --horizon: #3E7CB1;
+    --amber: #E8A548;
+    --white: #F2F5F8;
+    --slate: #7C8B9E;
+    --line: rgba(242,245,248,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 6%;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .logo span { color: var(--amber); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    color: var(--slate);
+  }
+
+  .nav-links a {
+    color: var(--slate);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .status-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 6px 12px;
+    border: 1px solid var(--amber);
+    border-radius: 20px;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 100px 6% 140px;
+    overflow: hidden;
+  }
+
+  .telemetry-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--slate);
+    letter-spacing: 0.05em;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .telemetry-row .val { color: var(--horizon); }
+
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.05;
+    max-width: 780px;
+    letter-spacing: -0.02em;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    margin-top: 24px;
+    max-width: 520px;
+    color: var(--slate);
+    font-size: 17px;
+  }
+
+  .hero-cta {
+    margin-top: 40px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--amber);
+    color: #1a1408;
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--line);
+    color: var(--white);
+  }
+
+  /* horizon line svg */
+  .horizon-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    pointer-events: none;
+  }
+
+  .horizon-wrap svg { width: 100%; height: 100%; }
+
+  /* SERVICES */
+  .services {
+    padding: 100px 6%;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    max-width: 600px;
+    margin-bottom: 60px;
+    letter-spacing: -0.01em;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 40px 32px;
+  }
+
+  .service-alt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--horizon);
+    margin-bottom: 20px;
+  }
+
+  .service-card h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    color: var(--slate);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  /* PROOF STRIP */
+  .proof {
+    padding: 60px 6%;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: var(--bg-panel);
+  }
+
+  .proof-item {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .proof-item .num {
+    font-size: 28px;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .proof-item .label {
+    font-size: 12px;
+    color: var(--slate);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 120px 6%;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    max-width: 640px;
+    margin: 0 auto 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .cta-section p {
+    color: var(--slate);
+    max-width: 460px;
+    margin: 0 auto 36px;
+  }
+
+  footer {
+    padding: 32px 6%;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--slate);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .telemetry-row { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Lone Star <span>Aerial</span></div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="status-pill"><span class="dot"></span>Currently: hobbyist status</div>
+</nav>
+
+<section class="hero">
+  <div class="telemetry-row">
+    <span>ALT <span class="val">120FT</span></span>
+    <span>LOC <span class="val">33.0198°N, 96.6989°W</span></span>
+    <span>AIRCRAFT <span class="val">DJI MINI 4 PRO</span></span>
+    <span>STATUS <span class="val">PART 107 IN PROGRESS</span></span>
+  </div>
+
+  <h1>Aerial views that <em>close deals</em> and <em>catch problems</em> before they cost you.</h1>
+  <p class="hero-sub">Drone photography and inspection services for real estate and property owners in the Dallas–Fort Worth area. Currently building toward FAA Part 107 certification — booking early conversations now.</p>
+
+  <div class="hero-cta">
+    <a href="#contact" class="btn btn-primary">Get in touch</a>
+    <a href="#services" class="btn btn-secondary">See services</a>
+  </div>
+
+  <div class="horizon-wrap">
+    <svg viewBox="0 0 1400 220" preserveAspectRatio="none">
+      <path d="M0,180 Q350,140 700,165 T1400,150 L1400,220 L0,220 Z" fill="#101C2C"/>
+      <path d="M0,180 Q350,140 700,165 T1400,150" fill="none" stroke="#3E7CB1" stroke-width="1.5" opacity="0.6"/>
+      <circle cx="1180" cy="120" r="3" fill="#E8A548"/>
+      <line x1="1160" y1="120" x2="1200" y2="120" stroke="#E8A548" stroke-width="1" opacity="0.5"/>
+      <line x1="1180" y1="100" x2="1180" y2="140" stroke="#E8A548" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-label">// Capabilities</div>
+  <div class="section-title">Built around two things people actually pay for: better listings and fewer surprises on the roof.</div>
+
+  <div class="service-grid">
+    <div class="service-card">
+      <div class="service-alt">01 · REAL ESTATE</div>
+      <h3>Listing photography &amp; video</h3>
+      <p>Exterior aerials, establishing shots, and short flythrough clips that give listings the scale ground photos can't.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-alt">02 · INSPECTION</div>
+      <h3>Roof &amp; property condition reports</h3>
+      <p>Close-pass aerial imagery for insurance claims, storm damage checks, and pre-purchase inspections — no ladder required.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-alt">03 · COMING SOON</div>
+      <h3>Mapping &amp; site progress</h3>
+      <p>Aerial mapping for land surveys and construction progress tracking, planned once flight hours and equipment scale up.</p>
+    </div>
+  </div>
+</section>
+
+<div class="proof">
+  <div class="proof-item">
+    <div class="num">TRUST</div>
+    <div class="label">FAA HOBBYIST CERT — ACTIVE</div>
+  </div>
+  <div class="proof-item">
+    <div class="num">PART 107</div>
+    <div class="label">COMMERCIAL CERT — IN PROGRESS</div>
+  </div>
+  <div class="proof-item">
+    <div class="num">DFW</div>
+    <div class="label">SERVICE AREA — DALLAS/FORT WORTH</div>
+  </div>
+</div>
+
+<section class="cta-section" id="contact">
+  <div class="section-label" style="justify-content:center; display:flex;">// Get in touch</div>
+  <h2>Early client? Let's talk before I'm fully booked.</h2>
+  <p>I'm building this business from the ground up — early conversations help shape what services launch first.</p>
+  <a href="#" class="btn btn-primary">Send a message</a>
+</section>
+
+<footer>
+  <span>LONE STAR AERIAL — DFW, TX</span>
+  <span>ROUGH DRAFT — NOT YET LIVE</span>
+</footer>
+
+</body>
+</html>
